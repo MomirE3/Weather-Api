@@ -15,12 +15,27 @@
   </head>
   <body>
     <div class="container center">
-      <form class="d-flex">
-        <input id="inputValue" type="search" placeholder="Search city" />
-        <button id="searchButton" type="button">Search</button>
-      </form>
-      <h1 id="name"></h1>
-      <h2 id="temp"></h2>
+      <div class="input-group mb-3">
+        <input
+          id="inputValue"
+          type="text"
+          class="form-control"
+          placeholder="Recipient's username"
+          aria-label="Recipient's username"
+          aria-describedby="button-addon2"
+        />
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          id="searchButton"
+        >
+          Button
+        </button>
+      </div>
+    </div>
+    <div class="container background-style">
+      <h1 class="text-light" id="name"></h1>
+      <h2 class="text-light" id="date"></h2>
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
