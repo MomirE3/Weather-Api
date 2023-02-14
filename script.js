@@ -11,16 +11,19 @@ text.addEventListener("keypress", (event) => {
 button.addEventListener("click", () => {
   let text = document.querySelector("#inputValue").value;
   fetch(
-    `http://api.weatherapi.com/v1/forecast.json?key=5afd5d58c8504bb4bc2224735231102&q=${text}&days=1&aqi=no&alerts=no`
+    `http://api.weatherapi.com/v1/forecast.json?key=5afd5d58c8504bb4bc2224735231102&q=${text}&days=7&aqi=no&alerts=no`
   )
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
       let locationAPI = data["location"];
       let currentAPI = data["current"];
+      let forecastAPI = data["forecast"]["forecastday"];
+      console.log(forecastAPI);
 
       mainDivLeft(locationAPI, currentAPI);
       mainDivRight(currentAPI);
+      secondMainDiv(forecastAPI);
     });
   document.querySelector("#inputValue").value = "";
 });
@@ -39,7 +42,7 @@ function newFormatDate(locationAPI) {
 
 function mainDivLeft(locationAPI, currentAPI) {
   let mainDiv = document.querySelector("#main-div");
-
+  mainDiv.parentElement.classList.add("background-style");
   while (mainDiv.firstChild) {
     mainDiv.firstChild.remove();
   }
@@ -137,5 +140,56 @@ function fahrenheitOrCelsius(currentAPI) {
 
     temp = document.querySelector("#temp");
     temp.innerHTML = `${currentAPI.temp_f}°F`;
+  });
+}
+
+function secondMainDiv(forecastAPI) {
+  let mainDiv2 = document.querySelector("#main-div-2");
+
+  let div = document.createElement("div");
+  div.classList.add("col-12");
+  div.classList.add("d-flex");
+  div.classList.add("justify-content-center");
+
+  let p = document.createElement("p");
+  let text = document.createTextNode("Hourly");
+  p.appendChild(text);
+  p.setAttribute("id", "hourly");
+  p.classList.add("me-5");
+  p.classList.add("display-6");
+  div.appendChild(p);
+
+  p = document.createElement("p");
+  text = document.createTextNode("Daily");
+  p.appendChild(text);
+  p.setAttribute("id", "daily");
+  p.classList.add("ms-5");
+  p.classList.add("display-6");
+  div.appendChild(p);
+  mainDiv2.appendChild(div);
+
+  let hr = document.createElement("hr");
+  hr.style.border = "3px solid white";
+  mainDiv2.appendChild(hr);
+
+  let hourly = document.querySelector("#hourly");
+  let daily = document.querySelector("#daily");
+
+  hourly.addEventListener("click", () => {
+    daily.classList.remove("text-warning");
+    daily.classList.remove("fw-bold");
+    daily.classList.remove("text-decoration-underline");
+    hourly.classList.add("text-warning");
+    hourly.classList.add("fw-bold");
+    hourly.classList.add("text-decoration-underline");
+  });
+
+  daily.addEventListener("click", () => {
+    hourly.classList.remove("text-warning");
+    hourly.classList.remove("fw-bold");
+    hourly.classList.remove("text-decoration-underline");
+    daily.classList.add("text-warning");
+    daily.classList.add("fw-bold");
+    daily.classList.add("text-decoration-underline");
   });
 }
