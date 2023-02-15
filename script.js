@@ -173,7 +173,7 @@ function secondMainDiv(forecastAPI, currentAPI) {
   mainDiv2.appendChild(div);
 
   let hr = document.createElement("hr");
-  hr.style.border = "3px solid white";
+  hr.style.border = "3px solid #fff";
   mainDiv2.appendChild(hr);
 
   let hourly = document.querySelector("#hourly");
@@ -183,33 +183,57 @@ function secondMainDiv(forecastAPI, currentAPI) {
     daily.classList.remove("text-warning");
     daily.classList.remove("fw-bold");
     daily.classList.remove("text-decoration-underline");
+    daily.classList.remove("pe-none");
     hourly.classList.add("text-warning");
     hourly.classList.add("fw-bold");
     hourly.classList.add("text-decoration-underline");
+    hourly.classList.add("pe-none");
 
     let currentTime = currentAPI.last_updated.slice(11, 13);
     let arrayOfHours = [...forecastAPI[0].hour];
     arrayOfHours = arrayOfHours.concat(arrayOfHours);
 
     var divGroup = document.createElement("div");
-    divGroup.classList.add("d-flex");
+    divGroup.classList.add("row");
     divGroup.classList.add("justify-content-center");
+    divGroup.classList.add("text-center");
+    divGroup.setAttribute("id", "div-group");
     mainDiv2.appendChild(divGroup);
 
     for (let i = 0; i < arrayOfHours.length; i++) {
       if (currentTime == arrayOfHours[i].time.slice(11, 13)) {
-        for (let j = i; j < i + 7; j++) {
+        for (let j = i + 1; j < i + 7; j++) {
           var div = document.createElement("div");
+          div.classList.add("col");
+
           var p = document.createElement("p");
-          p.append(arrayOfHours[j].time.slice(11, 13));
-          var img = document.createElement("img");
-          img.src = `${arrayOfHours[j]["condition"].icon}`;
-          var p2 = document.createElement("p");
-          p2.append(arrayOfHours[j].temp_c);
-          div.appendChild(p);
-          div.appendChild(img);
-          div.appendChild(p2);
-          divGroup.appendChild(div);
+          if (arrayOfHours[j].time.slice(11, 13)[0] == "0") {
+            p.append(`${arrayOfHours[j].time.slice(12, 13)}:00`);
+            p.classList.add("fs-3");
+            var img = document.createElement("img");
+            img.src = `${arrayOfHours[j]["condition"].icon}`;
+            var p2 = document.createElement("p");
+            p2.append(`${arrayOfHours[j].temp_c}°C`);
+            p2.classList.add("fs-3");
+            p2.style.borderBottom = "3px solid #fff";
+            div.appendChild(p);
+            div.appendChild(img);
+            div.appendChild(p2);
+            divGroup.appendChild(div);
+          } else {
+            p.append(`${arrayOfHours[j].time.slice(11, 13)}:00`);
+            p.classList.add("fs-3");
+            var img = document.createElement("img");
+            img.src = `${arrayOfHours[j]["condition"].icon}`;
+            var p2 = document.createElement("p");
+            p2.append(`${arrayOfHours[j].temp_c}°C`);
+            p2.classList.add("fs-3");
+            p2.style.borderBottom = "3px solid #fff";
+            div.appendChild(p);
+            div.appendChild(img);
+            div.appendChild(p2);
+            divGroup.appendChild(div);
+          }
         }
         break;
       }
@@ -217,11 +241,15 @@ function secondMainDiv(forecastAPI, currentAPI) {
   });
 
   daily.addEventListener("click", () => {
+    let hourlyDiv = document.querySelector("#div-group");
+    hourlyDiv.remove();
     hourly.classList.remove("text-warning");
     hourly.classList.remove("fw-bold");
     hourly.classList.remove("text-decoration-underline");
+    hourly.classList.remove("pe-none");
     daily.classList.add("text-warning");
     daily.classList.add("fw-bold");
     daily.classList.add("text-decoration-underline");
+    daily.classList.add("pe-none");
   });
 }
