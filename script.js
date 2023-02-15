@@ -23,7 +23,7 @@ button.addEventListener("click", () => {
 
       mainDivLeft(locationAPI, currentAPI);
       mainDivRight(currentAPI);
-      secondMainDiv(forecastAPI);
+      secondMainDiv(forecastAPI, currentAPI);
     });
   document.querySelector("#inputValue").value = "";
 });
@@ -143,8 +143,12 @@ function fahrenheitOrCelsius(currentAPI) {
   });
 }
 
-function secondMainDiv(forecastAPI) {
+function secondMainDiv(forecastAPI, currentAPI) {
   let mainDiv2 = document.querySelector("#main-div-2");
+
+  while (mainDiv2.firstChild) {
+    mainDiv2.firstChild.remove();
+  }
 
   let div = document.createElement("div");
   div.classList.add("col-12");
@@ -182,6 +186,34 @@ function secondMainDiv(forecastAPI) {
     hourly.classList.add("text-warning");
     hourly.classList.add("fw-bold");
     hourly.classList.add("text-decoration-underline");
+
+    let currentTime = currentAPI.last_updated.slice(11, 13);
+    let arrayOfHours = [...forecastAPI[0].hour];
+    arrayOfHours = arrayOfHours.concat(arrayOfHours);
+
+    var divGroup = document.createElement("div");
+    divGroup.classList.add("d-flex");
+    divGroup.classList.add("justify-content-center");
+    mainDiv2.appendChild(divGroup);
+
+    for (let i = 0; i < arrayOfHours.length; i++) {
+      if (currentTime == arrayOfHours[i].time.slice(11, 13)) {
+        for (let j = i; j < i + 7; j++) {
+          var div = document.createElement("div");
+          var p = document.createElement("p");
+          p.append(arrayOfHours[j].time.slice(11, 13));
+          var img = document.createElement("img");
+          img.src = `${arrayOfHours[j]["condition"].icon}`;
+          var p2 = document.createElement("p");
+          p2.append(arrayOfHours[j].temp_c);
+          div.appendChild(p);
+          div.appendChild(img);
+          div.appendChild(p2);
+          divGroup.appendChild(div);
+        }
+        break;
+      }
+    }
   });
 
   daily.addEventListener("click", () => {
