@@ -19,18 +19,17 @@ button.addEventListener("click", () => {
       let locationAPI = data["location"];
       let currentAPI = data["current"];
       let forecastAPI = data["forecast"]["forecastday"];
-      console.log(forecastAPI);
 
-      mainDivLeft(locationAPI, currentAPI);
+      let date = locationAPI.localtime.slice(0, 10);
+
+      mainDivLeft(locationAPI, currentAPI, date);
       mainDivRight(currentAPI);
       secondMainDiv(forecastAPI, currentAPI);
     });
   document.querySelector("#inputValue").value = "";
 });
 
-function newFormatDate(locationAPI) {
-  let date = locationAPI.localtime.slice(0, 10);
-
+function newFormatDate(date) {
   let newDate = new Date(date);
   const options = {
     year: "numeric",
@@ -40,7 +39,7 @@ function newFormatDate(locationAPI) {
   return newDate.toLocaleString("en-US", options);
 }
 
-function mainDivLeft(locationAPI, currentAPI) {
+function mainDivLeft(locationAPI, currentAPI, date) {
   let mainDiv = document.querySelector("#main-div");
   mainDiv.parentElement.classList.add("background-style");
   while (mainDiv.firstChild) {
@@ -58,7 +57,7 @@ function mainDivLeft(locationAPI, currentAPI) {
   mainDiv.firstChild.append(h1);
 
   let p = document.createElement("p");
-  p.append(newFormatDate(locationAPI));
+  p.append(newFormatDate(date));
   p.classList.add("display-6");
   mainDiv.firstChild.append(p);
 
@@ -156,6 +155,7 @@ function secondMainDiv(forecastAPI, currentAPI) {
   div.classList.add("justify-content-center");
 
   let p = document.createElement("p");
+  p.style.cursor = "pointer";
   let text = document.createTextNode("Hourly");
   p.appendChild(text);
   p.setAttribute("id", "hourly");
@@ -164,6 +164,7 @@ function secondMainDiv(forecastAPI, currentAPI) {
   div.appendChild(p);
 
   p = document.createElement("p");
+  p.style.cursor = "pointer";
   text = document.createTextNode("Daily");
   p.appendChild(text);
   p.setAttribute("id", "daily");
@@ -180,6 +181,11 @@ function secondMainDiv(forecastAPI, currentAPI) {
   let daily = document.querySelector("#daily");
 
   hourly.addEventListener("click", () => {
+    let dailyDiv = document.querySelector("#div-group");
+    if (dailyDiv) {
+      dailyDiv.remove();
+    }
+
     daily.classList.remove("text-warning");
     daily.classList.remove("fw-bold");
     daily.classList.remove("text-decoration-underline");
@@ -205,8 +211,8 @@ function secondMainDiv(forecastAPI, currentAPI) {
         for (let j = i + 1; j < i + 7; j++) {
           var div = document.createElement("div");
           div.classList.add("col");
-
           var p = document.createElement("p");
+
           if (arrayOfHours[j].time.slice(11, 13)[0] == "0") {
             p.append(`${arrayOfHours[j].time.slice(12, 13)}:00`);
             p.classList.add("fs-3");
@@ -242,7 +248,9 @@ function secondMainDiv(forecastAPI, currentAPI) {
 
   daily.addEventListener("click", () => {
     let hourlyDiv = document.querySelector("#div-group");
-    hourlyDiv.remove();
+    if (hourlyDiv) {
+      hourlyDiv.remove();
+    }
     hourly.classList.remove("text-warning");
     hourly.classList.remove("fw-bold");
     hourly.classList.remove("text-decoration-underline");
@@ -251,5 +259,37 @@ function secondMainDiv(forecastAPI, currentAPI) {
     daily.classList.add("fw-bold");
     daily.classList.add("text-decoration-underline");
     daily.classList.add("pe-none");
+
+    var divGroup = document.createElement("div");
+    divGroup.classList.add("row");
+    divGroup.classList.add("justify-content-center");
+    divGroup.classList.add("text-center");
+    divGroup.setAttribute("id", "div-group");
+    mainDiv2.appendChild(divGroup);
+
+    for (let i = 1; i < forecastAPI.length; i++) {
+      let date = forecastAPI[i].date;
+      finalDate = newFormatDate(date).slice(0, 11);
+
+      var div = document.createElement("div");
+      div.classList.add("col");
+
+      var p = document.createElement("p");
+      p.append(finalDate);
+      p.classList.add("fs-3");
+
+      var img = document.createElement("img");
+      img.src = `${forecastAPI[i].day["condition"].icon}`;
+
+      var p2 = document.createElement("p");
+      p2.append(`${forecastAPI[i].day.avgtemp_c}°C`);
+      p2.classList.add("fs-3");
+      p2.style.borderBottom = "3px solid #fff";
+
+      div.appendChild(p);
+      div.appendChild(img);
+      div.appendChild(p2);
+      divGroup.appendChild(div);
+    }
   });
 }
