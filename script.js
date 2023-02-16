@@ -23,7 +23,7 @@ button.addEventListener("click", () => {
       let date = locationAPI.localtime.slice(0, 10);
 
       mainDivLeft(locationAPI, currentAPI, date);
-      mainDivRight(currentAPI);
+      mainDivRight(currentAPI, forecastAPI);
       secondMainDiv(forecastAPI, currentAPI);
     });
   document.querySelector("#inputValue").value = "";
@@ -71,7 +71,7 @@ function mainDivLeft(locationAPI, currentAPI, date) {
   mainDiv.firstChild.appendChild(p);
 }
 
-function mainDivRight(currentAPI) {
+function mainDivRight(currentAPI, forecastAPI) {
   let mainDiv = document.querySelector("#main-div");
 
   let div = document.createElement("div");
@@ -87,10 +87,10 @@ function mainDivRight(currentAPI) {
   h1.classList.add("display-1");
   mainDiv.lastChild.append(h1);
 
-  fahrenheitOrCelsius(currentAPI);
+  fahrenheitOrCelsius(currentAPI, forecastAPI);
 }
 
-function fahrenheitOrCelsius(currentAPI) {
+function fahrenheitOrCelsius(currentAPI, forecastAPI) {
   let div = document.querySelector("#second-div");
   let p = document.createElement("p");
   p.classList.add("display-6");
