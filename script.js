@@ -27,6 +27,7 @@ button.addEventListener("click", () => {
       secondMainDiv(forecastAPI, currentAPI);
     });
   document.querySelector("#inputValue").value = "";
+  removeAutoComplete();
 });
 
 function newFormatDate(date) {
@@ -291,5 +292,12 @@ function secondMainDiv(forecastAPI, currentAPI) {
       div.appendChild(p2);
       divGroup.appendChild(div);
     }
+  });
+}
+
+function removeAutoComplete() {
+  const divs = document.querySelectorAll(".autocomplete-items");
+  divs.forEach((element) => {
+    element.remove();
   });
 }

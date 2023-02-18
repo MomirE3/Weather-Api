@@ -9,7 +9,6 @@ body {
     background-image: url(./images/background.jpg);
     background-position: center;
     background-size: cover;
-    background-repeat: no-repeat;
 }
 
 .center {
@@ -22,4 +21,24 @@ body {
 .background-style {
     background-color: rgba(26, 36, 33, 0.5);
     border-radius: 15px;
+}
+
+.autocomplete {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    overflow-y: auto;
+    background-color: #fff;
+    z-index: 9;
+}
+
+.autocomplete-items {
+    padding: 5px 5px;
+    cursor: pointer;
+}
+
+.autocomplete-items:hover{
+    background-color: #585858;
+    color:#fff
 }

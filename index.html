@@ -19,15 +19,16 @@
   </head>
   <body>
     <div class="container center">
-      <div class="input-group mb-3">
+      <div class="input-group mb-3" autocomplete="off">
         <input
           id="inputValue"
           type="text"
-          class="form-control"
+          class="form-control position-relative"
           placeholder="Search city"
           aria-label="Recipient's username"
           aria-describedby="button-addon2"
         />
+
         <button
           class="btn btn-outline-secondary"
           type="button"
@@ -35,6 +36,7 @@
         >
           Button
         </button>
+        <div id="cityList" class="autocomplete"></div>
       </div>
     </div>
     <div class="container text-light p-5">
@@ -47,5 +49,6 @@
       crossorigin="anonymous"
     ></script>
     <script src="script.js"></script>
+    <script src="autocomplete.js"></script>
   </body>
 </html>
