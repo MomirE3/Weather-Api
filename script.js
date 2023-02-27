@@ -49,8 +49,7 @@ function mainDivLeft(locationAPI, currentAPI, date) {
 
   let div = document.createElement("div");
   mainDiv.appendChild(div);
-  div.classList.add("col-6");
-  div.classList.add("text-center");
+  div.classList.add("col-6", "text-center");
 
   let h1 = document.createElement("h1");
   h1.append(locationAPI.name);
@@ -77,8 +76,7 @@ function mainDivRight(currentAPI, forecastAPI) {
 
   let div = document.createElement("div");
   mainDiv.appendChild(div);
-  div.classList.add("col-6");
-  div.classList.add("text-center");
+  div.classList.add("col-6", "text-center");
   div.setAttribute("id", "second-div");
 
   let h1 = document.createElement("h1");
@@ -100,8 +98,7 @@ function fahrenheitOrCelsius(currentAPI, forecastAPI) {
   span.setAttribute("id", "celsius");
   let text = document.createTextNode("C ");
   span.appendChild(text);
-  span.classList.add("text-warning");
-  span.classList.add("fw-bold");
+  span.classList.add("text-warning", "fw-bold");
   p.appendChild(span);
 
   span = document.createElement("span");
@@ -123,20 +120,16 @@ function fahrenheitOrCelsius(currentAPI, forecastAPI) {
   fahrenheit = document.querySelector("#fahrenheit");
 
   celsius.addEventListener("click", () => {
-    fahrenheit.classList.remove("text-warning");
-    fahrenheit.classList.remove("fw-bold");
-    celsius.classList.add("text-warning");
-    celsius.classList.add("fw-bold");
+    fahrenheit.classList.remove("text-warning", "fw-bold");
+    celsius.classList.add("text-warning", "fw-bold");
 
     temp = document.querySelector("#temp");
     temp.innerHTML = `${currentAPI.temp_c}°C`;
   });
 
   fahrenheit.addEventListener("click", () => {
-    celsius.classList.remove("text-warning");
-    celsius.classList.remove("fw-bold");
-    fahrenheit.classList.add("text-warning");
-    fahrenheit.classList.add("fw-bold");
+    celsius.classList.remove("text-warning", "fw-bold");
+    fahrenheit.classList.add("text-warning", "fw-bold");
 
     temp = document.querySelector("#temp");
     temp.innerHTML = `${currentAPI.temp_f}°F`;
@@ -151,17 +144,14 @@ function secondMainDiv(forecastAPI, currentAPI) {
   }
 
   let div = document.createElement("div");
-  div.classList.add("col-12");
-  div.classList.add("d-flex");
-  div.classList.add("justify-content-center");
+  div.classList.add("col-12", "d-flex", "justify-content-center");
 
   let p = document.createElement("p");
   p.style.cursor = "pointer";
   let text = document.createTextNode("Hourly");
   p.appendChild(text);
   p.setAttribute("id", "hourly");
-  p.classList.add("me-5");
-  p.classList.add("display-6");
+  p.classList.add("me-5", "display-6");
   div.appendChild(p);
 
   p = document.createElement("p");
@@ -169,8 +159,7 @@ function secondMainDiv(forecastAPI, currentAPI) {
   text = document.createTextNode("Daily");
   p.appendChild(text);
   p.setAttribute("id", "daily");
-  p.classList.add("ms-5");
-  p.classList.add("display-6");
+  p.classList.add("ms-5", "display-6");
   div.appendChild(p);
   mainDiv2.appendChild(div);
 
@@ -187,23 +176,25 @@ function secondMainDiv(forecastAPI, currentAPI) {
       dailyDiv.remove();
     }
 
-    daily.classList.remove("text-warning");
-    daily.classList.remove("fw-bold");
-    daily.classList.remove("text-decoration-underline");
-    daily.classList.remove("pe-none");
-    hourly.classList.add("text-warning");
-    hourly.classList.add("fw-bold");
-    hourly.classList.add("text-decoration-underline");
-    hourly.classList.add("pe-none");
+    daily.classList.remove(
+      "text-warning",
+      "fw-bold",
+      "text-decoration-underline",
+      "pe-none"
+    );
+    hourly.classList.add(
+      "text-warning",
+      "fw-bold",
+      "text-decoration-underline",
+      "pe-none"
+    );
 
     let currentTime = currentAPI.last_updated.slice(11, 13);
     let arrayOfHours = [...forecastAPI[0].hour];
     arrayOfHours = arrayOfHours.concat(arrayOfHours);
 
     var divGroup = document.createElement("div");
-    divGroup.classList.add("row");
-    divGroup.classList.add("justify-content-center");
-    divGroup.classList.add("text-center");
+    divGroup.classList.add("row", "justify-content-center", "text-center");
     divGroup.setAttribute("id", "div-group");
     mainDiv2.appendChild(divGroup);
 
@@ -252,19 +243,21 @@ function secondMainDiv(forecastAPI, currentAPI) {
     if (hourlyDiv) {
       hourlyDiv.remove();
     }
-    hourly.classList.remove("text-warning");
-    hourly.classList.remove("fw-bold");
-    hourly.classList.remove("text-decoration-underline");
-    hourly.classList.remove("pe-none");
-    daily.classList.add("text-warning");
-    daily.classList.add("fw-bold");
-    daily.classList.add("text-decoration-underline");
-    daily.classList.add("pe-none");
+    hourly.classList.remove(
+      "text-warning",
+      "fw-bold",
+      "text-decoration-underline",
+      "pe-none"
+    );
+    daily.classList.add(
+      "text-warning",
+      "fw-bold",
+      "text-decoration-underline",
+      "pe-none"
+    );
 
     var divGroup = document.createElement("div");
-    divGroup.classList.add("row");
-    divGroup.classList.add("justify-content-center");
-    divGroup.classList.add("text-center");
+    divGroup.classList.add("row", "justify-content-center", "text-center");
     divGroup.setAttribute("id", "div-group");
     mainDiv2.appendChild(divGroup);
 
