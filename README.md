@@ -9,4 +9,4 @@ Web Site also provides users with hourly and daily weather forecast for their lo
 Created by: Aleksandar Momirovic
 Linkedin: https://www.linkedin.com/in/aleksandar-momirovic
 
-The application can be accessed <a href:"https://momire3.github.io/Weather-Api">here</a>.
+The application can be accessed <a href="https://momire3.github.io/Weather-Api">here</a>.
